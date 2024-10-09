@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>KBC-style Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+            color: black;
+        }
+
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            margin: 20px;
+        }
+
+        .answer-result {
+            font-size: 1.2em;
+            color: green;
+        }
+
+        .wrong-answer {
+            font-size: 1.2em;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to KBC-style Game</h1>
+    <div class="question">Question will appear here</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=Scan to Join&size=150x150" class="qr-code" alt="QR Code">
+    <div id="result"></div>
+
+    <script>
+        const questions = [{
+                question: "Who is known as the Iron Man of India?",
+                answer: "Sardar Vallabhbhai Patel"
+            },
+            {
+                question: "What is the capital of Australia?",
+                answer: "Canberra"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                answer: "Mars"
+            },
+            {
+                question: "In which year did India gain independence?",
+                answer: "1947"
+            },
+            {
+                question: "Who wrote 'Romeo and Juliet'?",
+                answer: "William Shakespeare"
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function displayQuestion() {
+            if (currentQuestion < questions.length) {
+                document.querySelector('.question').innerText = questions[currentQuestion].question;
+                // Here we assume the QR code is scanned and player interaction happens
+                // For demo purposes, we simulate a correct answer
+                setTimeout(() => {
+                    const playerAnswer = prompt('Enter your answer:');
+                    if (playerAnswer === questions[currentQuestion].answer) {
+                        document.getElementById('result').innerHTML = `<div class="answer-result">Congratulations, ${playerAnswer} is correct!</div>`;
+                        currentQuestion++;
+                        displayQuestion();
+                    } else {
+                        document.getElementById('result').innerHTML = `<div class="wrong-answer">Sorry, that answer is incorrect.</div>`;
+                    }
+                }, 3000);
+            } else {
+                document.querySelector('.question').innerText = "Game Over! Well Played!";
+            }
+        }
+
+        displayQuestion();
+    </script>
+</body>
+
+</html>
